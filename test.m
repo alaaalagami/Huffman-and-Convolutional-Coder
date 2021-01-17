@@ -1,0 +1,9 @@
+r = randi([0 1],1,3000);
+s = convEncode(r);
+s2 = signalize(s); 
+s2 = binarize(awgn(s2, 1, 'measured'));
+error = sum(abs(s2 - s));
+t = poly2trellis(3,[7 6 5]);
+v = vitdec(s2, t,1 , 'trunc','hard');
+v = v(1:end-2);
+error1 = sum(abs(v - r)); 
